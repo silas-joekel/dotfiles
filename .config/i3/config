@@ -1,0 +1,314 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+
+# Restore nitrogen, so the wallpapers are set correctly
+exec --no-startup-id nitrogen --restore
+
+# Set border to 1 so the title bars disapper
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
+ 
+## Set colors
+# Special
+set_from_resource $foreground i3wm.foreground #ababab
+set $t_foreground #abababff
+set_from_resource $background i3wm.background #000000
+set $t_background #00000040
+set_from_resource $cursorColor i3wm.cursorColor #ababab
+set $t_cursorColor #abababff
+# Black
+set_from_resource $black i3wm.color0 #000000
+set $t_black #000000FF
+# Red
+set_from_resource $red i3wm.color1 #e92f2f
+set $t_red #e92f2fff
+# Green
+set_from_resource $green $i3wm.color2 #0ed839
+set $t_green #0ed839ff
+# Yellow
+set_from_resource $yellow i3wm.color3 #dddd13
+set $t_yellow #dddd13ff
+# Blue
+set_from_resource $blue i3wm.color4 #3b48e3
+set $t_blue #3b48e3ff
+# Magenta
+set_from_resource $magenta i3wm.color13 #ff00ff
+set $t_magenta #ff00ffff
+set_from_resource $magentadark i3wm.color5 #600060
+set $t_magentadark #880088ff
+# Cyan
+set_from_resource $cyan i3wm.color14 #00ffff
+set $t_cyan #00ffffff
+set_from_resource $cyandark i3wm.color6 #004080
+set $t_cyandark #004080ff
+# White
+set_from_resource $white i3wm.color7 #ffffff
+set $t_white #ffffffff
+
+# class                 border       background   text         indicator    child_border
+client.focused          $magentadark $magentadark $white       $magenta     $magenta
+client.focused_inactive $background  $background  $foreground  $background  $background
+client.unfocused        $background  $background  $foreground  $background  $background
+client.urgent           $background  $background  $foreground  $background  $background
+client.placeholder      $background  $background  $foreground  $yellow      $yellow
+
+client.background       $background 
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 8
+font -mist-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 9
+
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn't scale on retina/hidpi displays.
+
+# variable for mod key for easy change
+set $mod Mod4
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up k
+set $down j
+set $left h
+set $right l
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# start i3lock (lock screen) with almost black but magenta
+bindsym $mod+q exec i3lock -c 200020
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# move workspaces to other monitor
+bindsym $mod+Control+$left move workspace to output left
+bindsym $mod+Control+$right move workspace to output right
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1: slam"
+set $ws2 "2: org"
+set $ws3 "3: dev"
+set $ws4 "4: web"
+set $ws5 "5: vim"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will grow the window’s height.
+        # Pressing down will shrink the window’s height.
+        bindsym $mod+$left       resize shrink width 10 px or 10 ppt
+        bindsym $mod+$down       resize shrink height 10 px or 10 ppt
+        bindsym $mod+$up         resize grow height 10 px or 10 ppt
+        bindsym $mod+$right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym $mod+Left        resize shrink width 10 px or 10 ppt
+        bindsym $mod+Down        resize shrink height 10 px or 10 ppt
+        bindsym $mod+Up          resize grow height 10 px or 10 ppt
+        bindsym $mod+Right       resize grow width 10 px or 10 ppt
+
+        # Pressing left will shrink the window´s width just by a bit.
+        # Pressing right will grow the window´s width just by a bit.
+        # Pressing up will grow the window´s height just by a bit.
+        # Pressing down will shrink the window´s height just by a bit.
+        bindsym $mod+Shift+$left       resize shrink width 1 px or 1 ppt
+        bindsym $mod+Shift+$down       resize shrink height 1 px or 1 ppt
+        bindsym $mod+Shift+$up         resize grow height 1 px or 1 ppt
+	bindsym $mod+Shift+$right      resize grow width 1 px or 1 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym $mod+Shift+Left        resize shrink width 1 px or 1 ppt
+        bindsym $mod+Shift+Down        resize shrink height 1 px or 1 ppt
+        bindsym $mod+Shift+Up          resize grow height 1 px or 1 ppt
+        bindsym $mod+Shift+Right       resize grow width 1 px or 1 ppt
+
+	# back to normal: Enter, Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+
+# control sound (volume and spotify)
+mode "music" {
+	# Pulse Audio controls
+	bindsym k exec pactl set-sink-volume 0 +5% 	# increase sound volume
+	bindsym j exec pactl set-sink-volume 0 -5% 	# decrease sound volume
+	bindsym n exec pactl set-sink-mute 0 toggle	# mute sound
+	# Same with mod key
+	bindsym $mod+k exec pactl set-sink-volume 0 +5% 	# increase sound volume
+	bindsym $mod+j exec pactl set-sink-volume 0 -5% 	# decrease sound volume
+	bindsym $mod+n exec pactl set-sink-mute 0 toggle	# mute sound
+
+	# Play/Pause, Previous and Next for Spotify
+	bindsym space	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+	bindsym h	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+	bindsym l	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+	# Same with mod key
+	bindsym $mod+space	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+	bindsym $mod+h	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+	bindsym $mod+l	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+
+	# back to normal: Enter, Escape or $mod+m
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym m      mode "default"
+	bindsym $mod+m mode "default"
+}
+
+bindsym $mod+m mode "music"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        status_command i3status
+	i3bar_command i3bar
+	position top
+	font -mist-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+	font pango:DejaVu Sans Mono 10
+	separator_symbol ":|:"
+	colors {
+		background $t_background
+		statusline $t_foreground
+		separator  $t_foreground
+
+		# selector          border         background     text
+		focused_workspace  $t_cyandark    $t_cyandark    $t_white
+        	active_workspace   $t_background  $t_background  $t_white
+        	inactive_workspace $t_background  $t_background  $t_foreground
+        	urgent_workspace   $t_red         $t_red         $t_foreground
+	        binding_mode       $t_red         $t_red         $t_foreground
+	}
+}
