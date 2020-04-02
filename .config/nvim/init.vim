@@ -7,3 +7,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end()
+
+
+set number relativenumber
+set path+=**
