@@ -70,7 +70,7 @@ client.background       $background
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 8
-font -mist-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 font pango:DejaVu Sans Mono 9
 
 
@@ -212,25 +212,24 @@ bindsym $mod+0 workspace $ws10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Startup Application Script
 exec ~/.config/i3/setup.sh
-exec --no-startup-id "surf calendar.google.com"
-exec --no-startup-id "https://ontos4dds.atlassian.net/jira/software/projects/WAPP/boards/23?assignee=5dbfd1bac424110de525613e"
-exec --no-startup-id "surf mail.google.com"
-
-# Default application workspace assignments
+# Application assignments
 assign [class="^Slack$"] $ws1
 assign [class="^Spotify$"] $ws1
 assign [class="^Surf$"] $ws2
 assign [class="^Code$"] $ws3
 assign [class="^Firefox$"] $ws4
+
+for_window [title="Slack call"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -279,6 +278,41 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# setup outputs
+mode "outputs" {
+	# use notebook output only 
+	bindsym n		exec xrandr --output eDP-1 --auto --output HDMI-2 --off
+	bindsym $mod+n		exec xrandr --output eDP-1 --auto --output HDMI-2 --off
+
+	# use monitor output only
+	bindsym m		exec xrandr --output eDP-1 --off --output HDMI-2 --auto --transform none 
+	bindsym $mod+m		exec xrandr --outptu eDP-1 --off --outptu HDMI-2 --auto --transform none 
+
+	# Duplicate monitors
+	bindsym d		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --same-as eDP-1
+	bindsym $mod+d		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --same-as eDP-1
+	# Duplicate and use notebook resolution (my stretch on ouput
+	bindsym u		exec xrandr --output eDP-1 --auto --output HDMI-2 --scale-from 1920x1080 --same-as eDP-1
+	bindsym $mod+u		exec xrandr --output eDP-1 --auto --output HDMI-2 --scale-from 1920x1080 --same-as eDP-1
+
+	# Extend notebook with output in specified direction
+	bindsym $left		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --left-of eDP-1
+	bindsym $mod+$left	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --left-of eDP-1
+	bindsym $right		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --right-of eDP-1
+	bindsym $mod+$right	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --right-of eDP-1
+	bindsym $up		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --above eDP-1
+	bindsym $mod+$up	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --above eDP-1
+	bindsym $down		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --below eDP-1
+	bindsym $mod+$down	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --below eDP-1
+	
+	# back to normal: Enter, Escape or $mod+o
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym o mode "default"
+	bindsym $mod+o mode "default"
+}
+bindsym $mod+o mode "outputs"
+
 # Lock, shutdown and Co
 set $mode_system System lock (l), logout (e), reboot (r), poweroff (p/q/s)
 mode "$mode_system" {
@@ -304,7 +338,6 @@ bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
 # control sound (volume and spotify)
 mode "music" {
-	# Pulse Audio controls
 	bindsym k exec pactl set-sink-volume 0 +5% 	# increase sound volume
 	bindsym j exec pactl set-sink-volume 0 -5% 	# decrease sound volume
 	bindsym n exec pactl set-sink-mute 0 toggle	# mute sound
