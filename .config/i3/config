@@ -179,23 +179,21 @@ bindsym $mod+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:slam"
-set $ws2 "2:org"
+set $ws1 "1:com"
+set $ws2 "2:web"
 set $ws3 "3:dev"
-set $ws4 "4:web"
+set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
-set $ws7 "7:vim"
+set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
 # set workspaces to specific outputs
-workspace $ws1 output eDP-1
+workspace $ws1 output HDMI-2
 workspace $ws2 output HDMI-2
 workspace $ws3 output HDMI-2
-workspace $ws4 output HDMI-2
-workspace $ws7 output HDMI-2
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -224,10 +222,9 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 exec ~/.config/i3/setup.sh
 # Application assignments
 assign [class="^Slack$"] $ws1
-assign [class="^Spotify$"] $ws1
-assign [class="^Surf$"] $ws2
+assign [class="Google-chrome"] $ws2
+for_window [class="^Spotify$"] move scratchpad
 assign [class="^Code$"] $ws3
-assign [class="^Firefox$"] $ws4
 
 for_window [title="Slack call"] floating enable
 
@@ -332,39 +329,6 @@ mode "$mode_system" {
   bindsym Escape mode "default"
 }
 bindsym $mod+x mode "$mode_system"
-
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
-
-# control sound (volume and spotify)
-mode "music" {
-	bindsym k exec pactl set-sink-volume 0 +5% 	# increase sound volume
-	bindsym j exec pactl set-sink-volume 0 -5% 	# decrease sound volume
-	bindsym n exec pactl set-sink-mute 0 toggle	# mute sound
-	# Same with mod key
-	bindsym $mod+k exec pactl set-sink-volume 0 +5% 	# increase sound volume
-	bindsym $mod+j exec pactl set-sink-volume 0 -5% 	# decrease sound volume
-	bindsym $mod+n exec pactl set-sink-mute 0 toggle	# mute sound
-
-	# Play/Pause, Previous and Next for Spotify
-	bindsym space	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-	bindsym h	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-	bindsym l	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-	# Same with mod key
-	bindsym $mod+space	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-	bindsym $mod+h	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-	bindsym $mod+l	exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-
-	# back to normal: Enter, Escape or $mod+m
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-	bindsym m      mode "default"
-	bindsym $mod+m mode "default"
-}
-
-bindsym $mod+m mode "music"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
