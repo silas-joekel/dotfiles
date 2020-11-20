@@ -192,7 +192,7 @@ set $ws10 "10"
 
 # set workspaces to specific outputs
 workspace $ws1 output eDP-1
-workspace $ws2 output eDP-1
+workspace $ws2 output HDMI-2
 workspace $ws3 output HDMI-2
 workspace $ws4 output HDMI-2
 workspace $ws7 output HDMI-2
@@ -281,29 +281,31 @@ bindsym $mod+r mode "resize"
 # setup outputs
 mode "outputs" {
 	# use notebook output only 
-	bindsym n		exec xrandr --output eDP-1 --auto --output HDMI-2 --off
+	bindsym n			exec xrandr --output eDP-1 --auto --output HDMI-2 --off
 	bindsym $mod+n		exec xrandr --output eDP-1 --auto --output HDMI-2 --off
 
 	# use monitor output only
-	bindsym m		exec xrandr --output eDP-1 --off --output HDMI-2 --auto --transform none 
-	bindsym $mod+m		exec xrandr --outptu eDP-1 --off --outptu HDMI-2 --auto --transform none 
+	bindsym m			exec xrandr --output eDP-1 --off --output HDMI-2 --auto --transform none 
+	bindsym $mod+m		exec xrandr --output eDP-1 --off --output HDMI-2 --auto --transform none 
 
 	# Duplicate monitors
-	bindsym d		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --same-as eDP-1
+	bindsym d			exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --same-as eDP-1
 	bindsym $mod+d		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --same-as eDP-1
 	# Duplicate and use notebook resolution (my stretch on ouput
-	bindsym u		exec xrandr --output eDP-1 --auto --output HDMI-2 --scale-from 1920x1080 --same-as eDP-1
+	bindsym u			exec xrandr --output eDP-1 --auto --output HDMI-2 --scale-from 1920x1080 --same-as eDP-1
 	bindsym $mod+u		exec xrandr --output eDP-1 --auto --output HDMI-2 --scale-from 1920x1080 --same-as eDP-1
 
 	# Extend notebook with output in specified direction
 	bindsym $left		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --left-of eDP-1
-	bindsym $mod+$left	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --left-of eDP-1
 	bindsym $right		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --right-of eDP-1
-	bindsym $mod+$right	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --right-of eDP-1
-	bindsym $up		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --above eDP-1
-	bindsym $mod+$up	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --above eDP-1
+	bindsym $up			exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --above eDP-1
 	bindsym $down		exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --below eDP-1
-	bindsym $mod+$down	exec xrandr --output eDP-1 --auto --output HDMI-2 --auto --transform none --below eDP-1
+	
+	# Move window focus for focus sensitive output scripts
+	bindsym $mod+$left	focus left
+	bindsym $mod+$right	focus right
+	bindsym $mod+$up	focus up
+	bindsym $mod+$down	focus down
 	
 	# back to normal: Enter, Escape or $mod+o
 	bindsym Return mode "default"
