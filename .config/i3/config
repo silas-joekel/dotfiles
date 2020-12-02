@@ -184,7 +184,7 @@ assign [class="Google-chrome" instance="^ontos4dds.atlassian.net__wiki$"] $ws2
 assign [class="Google-chrome" instance="^ontos4dds.atlassian.net__jira$"] $ws2
 assign [class="Google-chrome" instance="^ontos4dds.atlassian.net__jira_software_projects_WAPP_boards_23$"] $ws2
 for_window [class="Google-chrome" instance="open.spotify.com"] move scratchpad
-assign [class="^Code$"] $ws3
+assign [class="^code-oss$"] $ws3
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
